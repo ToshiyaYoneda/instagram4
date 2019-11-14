@@ -25,8 +25,8 @@ class CommentViewController: UIViewController {
         
         let comment = commentText.text
         let name = Auth.auth().currentUser?.displayName
+        let comments: String = "\(name!): \(commentText.text!)"
         
-            
         // コメントが入力されていない時はHUDを出して何もしない
         if comment!.isEmpty {
                 SVProgressHUD.showError(withStatus: "コメントを入力して下さい")
@@ -35,27 +35,17 @@ class CommentViewController: UIViewController {
 
         // 辞書を作成してFirebaseに保存する
         let postRef = Database.database().reference().child(Const.PostPath).child(postData.id!)
-            let postDic = ["comment": commentText.text,"commentName": name]
-            postRef.updateChildValues(postDic as [AnyHashable : Any])
-        
-        let HVC = storyboard?.instantiateViewController(withIdentifier: "Home") as! HomeViewController
-        self.present(HVC, animated: true, completion: nil)
+        let postDic = ["comments": comments]
+            
+            postRef.childByAutoId().setValue(postDic)
+            
+        self.dismiss(animated: true, completion: nil)
         }
-        
     }
     
     @IBAction func cancel(_ sender: Any) {
         
         dismiss(animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
