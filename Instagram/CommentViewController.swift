@@ -23,21 +23,24 @@ class CommentViewController: UIViewController {
     @IBOutlet weak var commentText: UITextField!
     @IBAction func commentPost(_ sender: Any) {
         
-        let comment = commentText.text
         let name = Auth.auth().currentUser?.displayName
-        let comments: String = "\(name!): \(commentText.text!)"
+        let comment: String = "\(name!): \(commentText.text!)"
+        var comments: [String] = []
         
         // コメントが入力されていない時はHUDを出して何もしない
-        if comment!.isEmpty {
+        if commentText.text!.isEmpty {
                 SVProgressHUD.showError(withStatus: "コメントを入力して下さい")
                 return
         } else {
+           
+        comments.append(comment)
 
         // 辞書を作成してFirebaseに保存する
-        let postRef = Database.database().reference().child(Const.PostPath).child(postData.id!)
-        let postDic = ["comments": comments]
+            let postRef = Database.database().reference().child(Const.PostPath).child(postData.id!)
+        let postDic = ["comments": [comment]]
             
-            postRef.childByAutoId().setValue(postDic)
+        postRef.updateChildValues(postDic)
+
             
         self.dismiss(animated: true, completion: nil)
         }

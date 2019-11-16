@@ -50,7 +50,7 @@ class PostTableViewCell: UITableViewCell {
             self.likeButton.setImage(buttonImage, for: .normal)
         }
         
-        self.commentLabel.text = "\(postData.comments)"
+        self.commentLabel.text = "\(postData.comments!)"
 
     }
 }
