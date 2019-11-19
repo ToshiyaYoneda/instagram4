@@ -25,7 +25,7 @@ class CommentViewController: UIViewController {
         
         let name = Auth.auth().currentUser?.displayName
         let comment: String = "\(name!): \(commentText.text!)"
-        var comments: [String] = []
+        //var comments: [String] = []
         
         // コメントが入力されていない時はHUDを出して何もしない
         if commentText.text!.isEmpty {
@@ -33,15 +33,14 @@ class CommentViewController: UIViewController {
                 return
         } else {
            
-        comments.append(comment)
+        postData.comments.append(comment)
 
         // 辞書を作成してFirebaseに保存する
-            let postRef = Database.database().reference().child(Const.PostPath).child(postData.id!)
-        let postDic = ["comments": [comment]]
+        let postRef = Database.database().reference().child(Const.PostPath).child(postData.id!)
+        let postDic = ["comments": postData.comments]
             
         postRef.updateChildValues(postDic)
 
-            
         self.dismiss(animated: true, completion: nil)
         }
     }

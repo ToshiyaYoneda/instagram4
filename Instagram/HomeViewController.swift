@@ -176,8 +176,6 @@ class HomeViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let postData = postArray[indexPath!.row]
         CVC.postData = postData
         
-        
-    
     }
 
 }

@@ -19,6 +19,7 @@ class PostTableViewCell: UITableViewCell {
     @IBOutlet weak var commentLabel: UILabel!
     
     
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -50,7 +51,10 @@ class PostTableViewCell: UITableViewCell {
             self.likeButton.setImage(buttonImage, for: .normal)
         }
         
-        self.commentLabel.text = "\(postData.comments!)"
-
+        var commentValue: String = ""
+        for value in postData.comments {
+            commentValue += value + "\n"
+        }
+        self.commentLabel.text = commentValue
     }
 }
